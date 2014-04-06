@@ -28,8 +28,8 @@ float intersect_sphere(Point o, Vector ray, Spheres *sph, Point *hit)
         return -1.0;
     }
 
-    float t1 = (-b + sqrtf(b * b - 4 * a * c)) / 2 * a;
-    float t2 = (-b - sqrtf(b * b - 4 * a * c)) / 2 * a;
+    float t1 = (-b + sqrtf(discriminant)) / 2 * a;
+    float t2 = (-b - sqrtf(discriminant)) / 2 * a;
 
     if (t1 > 0 && t2 > 0) {
         return t1 < t2 ? t1 : t2;
@@ -43,6 +43,30 @@ float intersect_sphere(Point o, Vector ray, Spheres *sph, Point *hit)
     else {
         return -1.0;
     }
+}
+
+bool intersect_shadow(Point o, Vector ray, Spheres *spheres)
+{
+    normalize(&ray);
+
+    while (spheres) {
+        float a = vec_dot(ray, ray);
+        float b = vec_dot(vec_scale(get_vec(spheres->center, o), 2), ray);
+        float c = vec_dot(get_vec(spheres->center, o), get_vec(spheres->center, o));
+        c -= spheres->radius * spheres->radius;
+
+        float discriminant = b * b - 4 * a * c;
+
+        float t1 = (-b + sqrtf(discriminant)) / 2 * a;
+        float t2 = (-b - sqrtf(discriminant)) / 2 * a;
+
+        if (discriminant > 0 && t1 > 0 && t2 > 0) {
+            return true;
+        }
+
+        spheres = spheres->next;
+    }
+    return false;
 }
 
 /*********************************************************************

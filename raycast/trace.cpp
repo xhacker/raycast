@@ -55,7 +55,8 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
     float d = vec_len(get_vec(p, light1));
     normalize(&light_vec);
 
-    RGB_float color = {0, 0, 0};
+    RGB_float color   = {0, 0, 0};
+    RGB_float ambient = {0, 0, 0};
 
     float coeff = 1 / (decay_a + decay_b * d + decay_c * d * d);
 
@@ -63,6 +64,15 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
     color.r += coeff * light1_diffuse[0] * sph->mat_diffuse[0] * vec_dot(surf_norm, light_vec);
     color.g += coeff * light1_diffuse[1] * sph->mat_diffuse[1] * vec_dot(surf_norm, light_vec);
     color.b += coeff * light1_diffuse[2] * sph->mat_diffuse[2] * vec_dot(surf_norm, light_vec);
+
+    // global illumination
+    ambient.r += global_ambient[0] * sph->reflectance;
+    ambient.g += global_ambient[1] * sph->reflectance;
+    ambient.b += global_ambient[2] * sph->reflectance;
+
+    if (shadow_on && intersect_shadow(p, light_vec, scene)) {
+        color = ambient;
+    }
 
     return color;
 }

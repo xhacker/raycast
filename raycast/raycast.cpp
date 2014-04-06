@@ -81,7 +81,7 @@ int step_max = 1;
 int shadow_on = 0;
 
 // OpenGL
-const int NumPoints = 6;
+const int num_points = 6;
 
 //----------------------------------------------------------------------------
 
@@ -89,7 +89,7 @@ void init()
 {
     // Vertices of a square
     double ext = 1.0;
-    vec4 points[NumPoints] = {
+    vec4 points[num_points] = {
         vec4(-ext, -ext, 0, 1.0), //v1
         vec4( ext, -ext, 0, 1.0), //v2
         vec4(-ext,  ext, 0, 1.0), //v3
@@ -99,7 +99,7 @@ void init()
     };
 
     // Texture coordinates
-    vec2 tex_coords[NumPoints] = {
+    vec2 tex_coords[num_points] = {
         vec2(0.0, 0.0),
         vec2(1.0, 0.0),
         vec2(0.0, 1.0),
@@ -172,7 +172,7 @@ void display(void)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glEnable(GL_CULL_FACE);
 
-    glDrawArrays(GL_TRIANGLES, 0, NumPoints);
+    glDrawArrays(GL_TRIANGLES, 0, num_points);
 
     glutSwapBuffers();
 }
@@ -225,7 +225,7 @@ int main(int argc, char** argv)
 
     // Optional arguments
     for (int i = 3; i < argc; i++) {
-        if (strcmp(argv[i], "-s") == 0)
+        if (strcmp(argv[i], "+s") == 0)
             shadow_on = 1;
     }
 
