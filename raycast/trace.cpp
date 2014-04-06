@@ -49,12 +49,21 @@ extern int step_max;
 /*********************************************************************
  * Phong illumination - you need to implement this!
  *********************************************************************/
-RGB_float phong(Point q, Vector v, Vector surf_norm, Spheres* sph)
+RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
 {
-    //
-    // do your thing here
-    //
-    RGB_float color;
+    Vector light_vec = get_vec(p, light1);
+    float d = vec_len(get_vec(p, light1));
+    normalize(&light_vec);
+
+    RGB_float color = {0, 0, 0};
+
+    float coeff = 1 / (decay_a + decay_b * d + decay_c * d * d);
+
+    // diffuse
+    color.r += coeff * light1_diffuse[0] * sph->mat_diffuse[0] * vec_dot(surf_norm, light_vec);
+    color.g += coeff * light1_diffuse[1] * sph->mat_diffuse[1] * vec_dot(surf_norm, light_vec);
+    color.b += coeff * light1_diffuse[2] * sph->mat_diffuse[2] * vec_dot(surf_norm, light_vec);
+
     return color;
 }
 
