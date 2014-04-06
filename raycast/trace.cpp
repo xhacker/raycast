@@ -41,7 +41,8 @@ extern float decay_a;
 extern float decay_b;
 extern float decay_c;
 
-extern int shadow_on;
+extern bool shadow_on;
+extern bool reflection_on;
 extern int step_max;
 
 /////////////////////////////////////////////////////////////////////
@@ -91,10 +92,21 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
     if (closest_sphere) {
         Vector eye_vec = get_vec(hit, eye_pos);
         Vector surf_norm = sphere_normal(hit, closest_sphere);
+        Vector light_ray = get_vec(hit, p);
         normalize(&surf_norm);
         normalize(&eye_vec);
+        normalize(&light_ray);
 
         color = phong(hit, eye_vec, surf_norm, closest_sphere);
+
+        if (reflection_on && cur_step <= step_max) {
+            Vector reflected_ray = vec_minus(vec_scale(surf_norm, vec_dot(surf_norm, light_ray) * 2), light_ray);
+            normalize(&reflected_ray);
+
+            RGB_float reflected_color = recursive_ray_trace(reflected_ray, hit, cur_step + 1);
+
+            color = clr_add(color, clr_scale(reflected_color, closest_sphere->reflectance));
+        }
     }
 
     return color;
@@ -128,7 +140,7 @@ void ray_trace()
         for (j = 0; j < win_width; j++) {
             ray = get_vec(eye_pos, cur_pixel_pos);
 
-            ret_color = recursive_ray_trace(ray, eye_pos, 0);
+            ret_color = recursive_ray_trace(ray, eye_pos, 1);
 
             // Parallel rays can be cast instead using below
             //

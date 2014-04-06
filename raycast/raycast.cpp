@@ -47,12 +47,12 @@ float image_height = (float(WIN_HEIGHT) / float(WIN_WIDTH)) * IMAGE_WIDTH;
 
 // some colors
 RGB_float background_clr; // background color
-RGB_float null_clr = { 0.0, 0.0, 0.0 }; // NULL color
+RGB_float null_clr = {0.0, 0.0, 0.0}; // NULL color
 
 //
 // these view parameters should be fixed
 //
-Point eye_pos = { 0.0, 0.0, 0.0 }; // eye position
+Point eye_pos = {0.0, 0.0, 0.0}; // eye position
 float image_plane = -2; // image plane position
 
 // list of spheres in the scene
@@ -77,8 +77,8 @@ float decay_c;
 int step_max = 1;
 
 // You can put your flags here
-// a flag to indicate whether you want to have shadows
-int shadow_on = 0;
+bool shadow_on = false;
+bool reflection_on = false;
 
 // OpenGL
 const int num_points = 6;
@@ -225,8 +225,12 @@ int main(int argc, char** argv)
 
     // Optional arguments
     for (int i = 3; i < argc; i++) {
-        if (strcmp(argv[i], "+s") == 0)
-            shadow_on = 1;
+        if (strcmp(argv[i], "+s") == 0) {
+            shadow_on = true;
+        }
+        if (strcmp(argv[i], "+l") == 0) {
+            reflection_on = true;
+        }
     }
 
     //

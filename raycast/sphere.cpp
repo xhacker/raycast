@@ -31,18 +31,23 @@ float intersect_sphere(Point o, Vector ray, Spheres *sph, Point *hit)
     float t1 = (-b + sqrtf(discriminant)) / 2 * a;
     float t2 = (-b - sqrtf(discriminant)) / 2 * a;
 
+    float t = -1.0;
+
     if (t1 > 0 && t2 > 0) {
-        return t1 < t2 ? t1 : t2;
+        t = t1 < t2 ? t1 : t2;
     }
     else if (t1 > 0) {
-        return t1;
+        t = t1;
     }
     else if (t2 > 0) {
-        return t2;
+        t = t2;
     }
-    else {
-        return -1.0;
-    }
+
+    hit->x = o.x + t * ray.x;
+    hit->y = o.y + t * ray.y;
+    hit->z = o.z + t * ray.z;
+
+    return t;
 }
 
 bool intersect_shadow(Point o, Vector ray, Spheres *spheres)
