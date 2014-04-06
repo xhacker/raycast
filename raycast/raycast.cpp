@@ -1,12 +1,12 @@
 /***********************************************************
- * CMPT 361, Summer 2012
+ *  CMPT 361, Sprint 2014
  *
  *  raycast.cpp
  *
  *  Render a simple scene using ray tracing
  *
- *  NAME:
- *  SFU ID:
+ *  NAME: Dongyuan Liu
+ *  SFU ID: 301239929
  *
  *  Template code for drawing a scene using raycasting.
  *  Some portions of the code was originally written by
@@ -56,7 +56,7 @@ Point eye_pos = { 0.0, 0.0, 0.0 }; // eye position
 float image_plane = -2; // image plane position
 
 // list of spheres in the scene
-Spheres* scene = NULL;
+Spheres *scene = NULL;
 
 // light 1 position and color
 Point light1;
@@ -91,11 +91,11 @@ void init()
     double ext = 1.0;
     vec4 points[NumPoints] = {
         vec4(-ext, -ext, 0, 1.0), //v1
-        vec4(ext, -ext, 0, 1.0), //v2
-        vec4(-ext, ext, 0, 1.0), //v3
-        vec4(-ext, ext, 0, 1.0), //v3
-        vec4(ext, -ext, 0, 1.0), //v2
-        vec4(ext, ext, 0, 1.0) //v4
+        vec4( ext, -ext, 0, 1.0), //v2
+        vec4(-ext,  ext, 0, 1.0), //v3
+        vec4(-ext,  ext, 0, 1.0), //v3
+        vec4( ext, -ext, 0, 1.0), //v2
+        vec4( ext,  ext, 0, 1.0), //v4
     };
 
     // Texture coordinates
@@ -105,7 +105,7 @@ void init()
         vec2(0.0, 1.0),
         vec2(0.0, 1.0),
         vec2(1.0, 0.0),
-        vec2(1.0, 1.0)
+        vec2(1.0, 1.0),
     };
 
     GLuint vaoID;

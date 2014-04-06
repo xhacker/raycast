@@ -1,6 +1,7 @@
 #include "sphere.h"
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 
 /**********************************************************************
  * This function intersects a ray with a given sphere 'sph'. You should
@@ -12,9 +13,36 @@
  * If there is an intersection, the point of intersection should be
  * stored in the "hit" variable
  **********************************************************************/
-float intersect_sphere(Point o, Vector u, Spheres* sph, Point* hit)
+float intersect_sphere(Point o, Vector ray, Spheres *sph, Point *hit)
 {
-    return 0.0;
+    normalize(&ray);
+
+    float a = vec_dot(ray, ray);
+    float b = vec_dot(vec_scale(get_vec(sph->center, o), 2), ray);
+    float c = vec_dot(get_vec(sph->center, o), get_vec(sph->center, o));
+    c -= sph->radius * sph->radius;
+
+    float discriminant = b * b - 4 * a * c;
+
+    if (discriminant < 0) {
+        return -1.0;
+    }
+
+    float t1 = (-b + sqrtf(b * b - 4 * a * c)) / 2 * a;
+    float t2 = (-b - sqrtf(b * b - 4 * a * c)) / 2 * a;
+
+    if (t1 > 0 && t2 > 0) {
+        return t1 < t2 ? t1 : t2;
+    }
+    else if (t1 > 0) {
+        return t1;
+    }
+    else if (t2 > 0) {
+        return t2;
+    }
+    else {
+        return -1.0;
+    }
 }
 
 /*********************************************************************
@@ -23,13 +51,22 @@ float intersect_sphere(Point o, Vector u, Spheres* sph, Point* hit)
  * which arguments to use for the function. For exmaple, note that you
  * should return the point of intersection to the calling function.
  **********************************************************************/
-Spheres* intersect_scene()
+Spheres * intersect_scene(Point o, Vector ray, Spheres *spheres, Point *hit)
 {
-    //
-    // do your thing here
-    //
+    Spheres *closest = NULL;
 
-    return NULL;
+    float min_distance = FLT_MAX;
+
+    while (spheres) {
+        float distance = intersect_sphere(o, ray, spheres, hit);
+        if ((distance != -1.0) && (distance < min_distance)) {
+            min_distance = min_distance;
+            closest = spheres;
+        }
+        spheres = spheres->next;
+    }
+
+    return closest;
 }
 
 /*****************************************************
@@ -37,7 +74,7 @@ Spheres* intersect_scene()
  *
  * You need not change this.
  *****************************************************/
-Spheres* add_sphere(Spheres* slist, Point ctr, float rad, float amb[],
+Spheres * add_sphere(Spheres *slist, Point ctr, float rad, float amb[],
                     float dif[], float spe[], float shine,
                     float refl, int sindex)
 {
