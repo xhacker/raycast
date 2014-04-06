@@ -7,34 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A04B31018F13893003B988A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B30F18F13893003B988A /* main.cpp */; };
-		1A04B31218F13893003B988A /* raycast.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A04B31118F13893003B988A /* raycast.1 */; };
+		1A04B32618F13AF8003B988A /* image_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B31A18F13AF8003B988A /* image_util.cpp */; };
+		1A04B32718F13AF8003B988A /* raycast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B31C18F13AF8003B988A /* raycast.cpp */; };
+		1A04B32818F13AF8003B988A /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B31D18F13AF8003B988A /* scene.cpp */; };
+		1A04B32918F13AF8003B988A /* sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B31F18F13AF8003B988A /* sphere.cpp */; };
+		1A04B32A18F13AF8003B988A /* trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B32118F13AF8003B988A /* trace.cpp */; };
+		1A04B32B18F13AF8003B988A /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B32318F13AF8003B988A /* vector.cpp */; };
+		1A04B34518F13BA4003B988A /* InitShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A04B33E18F13BA4003B988A /* InitShader.cpp */; };
+		1A04B34A18F13C41003B988A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A04B34818F13C41003B988A /* GLUT.framework */; };
+		1A04B34B18F13C41003B988A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A04B34918F13C41003B988A /* OpenGL.framework */; };
+		1A04B34D18F13C90003B988A /* fshader.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A04B31818F13AF8003B988A /* fshader.glsl */; };
+		1A04B34E18F13C90003B988A /* vshader.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A04B32518F13AF8003B988A /* vshader.glsl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1A04B30A18F13893003B988A /* CopyFiles */ = {
+		1A04B34C18F13C86003B988A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = "";
+			dstSubfolderSpec = 7;
 			files = (
-				1A04B31218F13893003B988A /* raycast.1 in CopyFiles */,
+				1A04B34D18F13C90003B988A /* fshader.glsl in CopyFiles */,
+				1A04B34E18F13C90003B988A /* vshader.glsl in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1A04B30C18F13893003B988A /* raycast */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = raycast; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A04B30F18F13893003B988A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		1A04B31118F13893003B988A /* raycast.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = raycast.1; sourceTree = "<group>"; };
+		1A04B31818F13AF8003B988A /* fshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fshader.glsl; sourceTree = "<group>"; };
+		1A04B31918F13AF8003B988A /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		1A04B31A18F13AF8003B988A /* image_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image_util.cpp; sourceTree = "<group>"; };
+		1A04B31B18F13AF8003B988A /* image_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_util.h; sourceTree = "<group>"; };
+		1A04B31C18F13AF8003B988A /* raycast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = raycast.cpp; sourceTree = "<group>"; };
+		1A04B31D18F13AF8003B988A /* scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
+		1A04B31E18F13AF8003B988A /* scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scene.h; sourceTree = "<group>"; };
+		1A04B31F18F13AF8003B988A /* sphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sphere.cpp; sourceTree = "<group>"; };
+		1A04B32018F13AF8003B988A /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = "<group>"; };
+		1A04B32118F13AF8003B988A /* trace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trace.cpp; sourceTree = "<group>"; };
+		1A04B32218F13AF8003B988A /* trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace.h; sourceTree = "<group>"; };
+		1A04B32318F13AF8003B988A /* vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vector.cpp; sourceTree = "<group>"; };
+		1A04B32418F13AF8003B988A /* vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
+		1A04B32518F13AF8003B988A /* vshader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vshader.glsl; sourceTree = "<group>"; };
+		1A04B33818F13BA4003B988A /* bishop.smf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bishop.smf; sourceTree = "<group>"; };
+		1A04B33918F13BA4003B988A /* bishop_hires.smf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bishop_hires.smf; sourceTree = "<group>"; };
+		1A04B33A18F13BA4003B988A /* chess_hires.smf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chess_hires.smf; sourceTree = "<group>"; };
+		1A04B33B18F13BA4003B988A /* chess_piece.smf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chess_piece.smf; sourceTree = "<group>"; };
+		1A04B33D18F13BA4003B988A /* Angel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Angel.h; sourceTree = "<group>"; };
+		1A04B33E18F13BA4003B988A /* InitShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitShader.cpp; sourceTree = "<group>"; };
+		1A04B33F18F13BA4003B988A /* mat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat.h; sourceTree = "<group>"; };
+		1A04B34018F13BA4003B988A /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec.h; sourceTree = "<group>"; };
+		1A04B34818F13C41003B988A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		1A04B34918F13C41003B988A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1A04B30918F13893003B988A /* Frameworks */ = {
+		1A04B34718F13C38003B988A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A04B34A18F13C41003B988A /* GLUT.framework in Frameworks */,
+				1A04B34B18F13C41003B988A /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +78,8 @@
 		1A04B30318F13893003B988A = {
 			isa = PBXGroup;
 			children = (
+				1A04B34818F13C41003B988A /* GLUT.framework */,
+				1A04B34918F13C41003B988A /* OpenGL.framework */,
 				1A04B30E18F13893003B988A /* raycast */,
 				1A04B30D18F13893003B988A /* Products */,
 			);
@@ -60,10 +96,48 @@
 		1A04B30E18F13893003B988A /* raycast */ = {
 			isa = PBXGroup;
 			children = (
-				1A04B30F18F13893003B988A /* main.cpp */,
-				1A04B31118F13893003B988A /* raycast.1 */,
+				1A04B33718F13BA4003B988A /* chess_pieces */,
+				1A04B33C18F13BA4003B988A /* include */,
+				1A04B31818F13AF8003B988A /* fshader.glsl */,
+				1A04B31918F13AF8003B988A /* global.h */,
+				1A04B31A18F13AF8003B988A /* image_util.cpp */,
+				1A04B31B18F13AF8003B988A /* image_util.h */,
+				1A04B31C18F13AF8003B988A /* raycast.cpp */,
+				1A04B31D18F13AF8003B988A /* scene.cpp */,
+				1A04B31E18F13AF8003B988A /* scene.h */,
+				1A04B31F18F13AF8003B988A /* sphere.cpp */,
+				1A04B32018F13AF8003B988A /* sphere.h */,
+				1A04B32118F13AF8003B988A /* trace.cpp */,
+				1A04B32218F13AF8003B988A /* trace.h */,
+				1A04B32318F13AF8003B988A /* vector.cpp */,
+				1A04B32418F13AF8003B988A /* vector.h */,
+				1A04B32518F13AF8003B988A /* vshader.glsl */,
 			);
 			path = raycast;
+			sourceTree = "<group>";
+		};
+		1A04B33718F13BA4003B988A /* chess_pieces */ = {
+			isa = PBXGroup;
+			children = (
+				1A04B33818F13BA4003B988A /* bishop.smf */,
+				1A04B33918F13BA4003B988A /* bishop_hires.smf */,
+				1A04B33A18F13BA4003B988A /* chess_hires.smf */,
+				1A04B33B18F13BA4003B988A /* chess_piece.smf */,
+			);
+			name = chess_pieces;
+			path = "../../raycast-demo/chess_pieces";
+			sourceTree = "<group>";
+		};
+		1A04B33C18F13BA4003B988A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				1A04B33D18F13BA4003B988A /* Angel.h */,
+				1A04B33E18F13BA4003B988A /* InitShader.cpp */,
+				1A04B33F18F13BA4003B988A /* mat.h */,
+				1A04B34018F13BA4003B988A /* vec.h */,
+			);
+			name = include;
+			path = "../../raycast-demo/include";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,8 +148,8 @@
 			buildConfigurationList = 1A04B31518F13893003B988A /* Build configuration list for PBXNativeTarget "raycast" */;
 			buildPhases = (
 				1A04B30818F13893003B988A /* Sources */,
-				1A04B30918F13893003B988A /* Frameworks */,
-				1A04B30A18F13893003B988A /* CopyFiles */,
+				1A04B34718F13C38003B988A /* Frameworks */,
+				1A04B34C18F13C86003B988A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -117,7 +191,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A04B31018F13893003B988A /* main.cpp in Sources */,
+				1A04B34518F13BA4003B988A /* InitShader.cpp in Sources */,
+				1A04B32818F13AF8003B988A /* scene.cpp in Sources */,
+				1A04B32718F13AF8003B988A /* raycast.cpp in Sources */,
+				1A04B32618F13AF8003B988A /* image_util.cpp in Sources */,
+				1A04B32918F13AF8003B988A /* sphere.cpp in Sources */,
+				1A04B32A18F13AF8003B988A /* trace.cpp in Sources */,
+				1A04B32B18F13AF8003B988A /* vector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +277,7 @@
 		1A04B31618F13893003B988A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -204,6 +285,7 @@
 		1A04B31718F13893003B988A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -227,6 +309,7 @@
 				1A04B31718F13893003B988A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
