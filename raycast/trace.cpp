@@ -5,6 +5,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include "global.h"
 #include "sphere.h"
@@ -43,6 +44,7 @@ extern float decay_c;
 
 extern bool shadow_on;
 extern bool reflection_on;
+extern bool stochastic_on;
 extern bool supersampling_on;
 extern int step_max;
 
@@ -105,6 +107,24 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
             normalize(&reflected_ray);
 
             RGB_float reflected_color = recursive_ray_trace(reflected_ray, hit, cur_step + 1);
+
+            if (stochastic_on) {
+                for (int i = 0; i < NUM_RANDOM_RAYS; ++i) {
+                    float random_x = (float)rand() / RAND_MAX / 2;
+                    float random_y = (float)rand() / RAND_MAX / 2;
+                    float random_z = (float)rand() / RAND_MAX / 2;
+
+                    Vector random_ray = reflected_ray;
+                    random_ray.x += random_x;
+                    random_ray.y += random_y;
+                    random_ray.z += random_z;
+                    normalize(&random_ray);
+
+                    RGB_float random_reflected_color = recursive_ray_trace(random_ray, hit, cur_step + 1);
+                    reflected_color = clr_add(reflected_color, clr_scale(random_reflected_color, RANDOM_SCALE));
+                }
+                reflected_color = clr_scale(reflected_color, 1.0 / (1.0 + RANDOM_SCALE * NUM_RANDOM_RAYS));
+            }
 
             color = clr_add(color, clr_scale(reflected_color, closest_sphere->reflectance));
         }

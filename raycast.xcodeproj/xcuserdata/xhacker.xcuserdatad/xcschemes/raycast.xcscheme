@@ -63,7 +63,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-d 2"
+            argument = "-d 1"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -72,6 +72,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+l"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "+f"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

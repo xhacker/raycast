@@ -79,6 +79,7 @@ int step_max = 1;
 // You can put your flags here
 bool shadow_on = false;
 bool reflection_on = false;
+bool stochastic_on = false;
 bool supersampling_on = false;
 
 // OpenGL
@@ -231,6 +232,9 @@ int main(int argc, char** argv)
         }
         else if (strcmp(argv[i], "+l") == 0) {
             reflection_on = true;
+        }
+        else if (strcmp(argv[i], "+f") == 0) {
+            stochastic_on = true;
         }
         else if (strcmp(argv[i], "+p") == 0) {
             supersampling_on = true;

@@ -2,3 +2,6 @@
 #define WIN_HEIGHT 512
 
 #define IMAGE_WIDTH 5.0
+
+#define NUM_RANDOM_RAYS 5
+#define RANDOM_SCALE 0.1
