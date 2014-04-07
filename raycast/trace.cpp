@@ -43,6 +43,7 @@ extern float decay_c;
 
 extern bool shadow_on;
 extern bool reflection_on;
+extern bool supersampling_on;
 extern int step_max;
 
 /////////////////////////////////////////////////////////////////////
@@ -141,6 +142,21 @@ void ray_trace()
             ray = get_vec(eye_pos, cur_pixel_pos);
 
             ret_color = recursive_ray_trace(ray, eye_pos, 1);
+
+            if (supersampling_on) {
+                for (int x = -1; x <= 1; x += 2) {
+                    for (int y = -1; y <= 1; y += 2) {
+                        Point new_pixel_pos = cur_pixel_pos;
+                        new_pixel_pos.x += x * x_grid_size / 4;
+                        new_pixel_pos.y += y * y_grid_size / 4;
+
+                        Vector new_ray = get_vec(eye_pos, new_pixel_pos);
+
+                        ret_color = clr_add(ret_color, recursive_ray_trace(new_ray, eye_pos, 1));
+                    }
+                }
+                ret_color = clr_scale(ret_color, 1.0 / 5);
+            }
 
             // Parallel rays can be cast instead using below
             //

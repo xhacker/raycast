@@ -79,6 +79,7 @@ int step_max = 1;
 // You can put your flags here
 bool shadow_on = false;
 bool reflection_on = false;
+bool supersampling_on = false;
 
 // OpenGL
 const int num_points = 6;
@@ -228,8 +229,11 @@ int main(int argc, char** argv)
         if (strcmp(argv[i], "+s") == 0) {
             shadow_on = true;
         }
-        if (strcmp(argv[i], "+l") == 0) {
+        else if (strcmp(argv[i], "+l") == 0) {
             reflection_on = true;
+        }
+        else if (strcmp(argv[i], "+p") == 0) {
+            supersampling_on = true;
         }
     }
 
