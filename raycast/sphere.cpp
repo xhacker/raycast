@@ -13,41 +13,31 @@
  * If there is an intersection, the point of intersection should be
  * stored in the "hit" variable
  **********************************************************************/
-float intersect_sphere(Point o, Vector ray, Spheres *sph, Point *hit)
+float intersect_sphere(Point o, Vector ray, Spheres *sph, Point* hit)
 {
-    normalize(&ray);
-
-    float a = vec_dot(ray, ray);
-    float b = vec_dot(vec_scale(get_vec(sph->center, o), 2), ray);
-    float c = vec_dot(get_vec(sph->center, o), get_vec(sph->center, o));
+    double a = vec_dot(ray, ray);
+    double b = 2 * vec_dot(ray, get_vec(sph->center, o));
+    double c = vec_dot(get_vec(sph->center, o), get_vec(sph->center, o));
     c -= sph->radius * sph->radius;
 
-    float discriminant = b * b - 4 * a * c;
+    double dt = b * b - 4 * a * c;
 
-    if (discriminant < 0) {
+    if (dt < 0) {
         return -1.0;
     }
+    else {
+        double t0 = (-b - sqrt(dt)) / (a * 2);
+        if (t0 < 0) {
+            return -1.0;
+        }
 
-    float t1 = (-b + sqrtf(discriminant)) / 2 * a;
-    float t2 = (-b - sqrtf(discriminant)) / 2 * a;
+        hit->x = o.x + t0 * ray.x;
+        hit->y = o.y + t0 * ray.y;
+        hit->z = o.z + t0 * ray.z;
 
-    float t = -1.0;
-
-    if (t1 > 0 && t2 > 0) {
-        t = t1 < t2 ? t1 : t2;
+        Vector v = { hit->x - o.x, hit->y - o.y, hit->z - o.z };
+        return vec_len(v);
     }
-    else if (t1 > 0) {
-        t = t1;
-    }
-    else if (t2 > 0) {
-        t = t2;
-    }
-
-    hit->x = o.x + t * ray.x;
-    hit->y = o.y + t * ray.y;
-    hit->z = o.z + t * ray.z;
-
-    return t;
 }
 
 bool intersect_shadow(Point o, Vector ray, Spheres *spheres)

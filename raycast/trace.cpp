@@ -94,7 +94,7 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
     color.g += coeff * light1_diffuse[1] * sph->mat_diffuse[1] * dot;
     color.b += coeff * light1_diffuse[2] * sph->mat_diffuse[2] * dot;
 
-    // global ambient
+//    // global ambient
 //    ambient.r += global_ambient[0] * sph->reflectance;
 //    ambient.g += global_ambient[1] * sph->reflectance;
 //    ambient.b += global_ambient[2] * sph->reflectance;
@@ -119,8 +119,6 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
     if (shadow_on && intersect_shadow(p, light_v, scene)) {
         color = ambient;
     }
-
-    validate_color(&color);
 
     return color;
 }
@@ -147,8 +145,8 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
         color = phong(hit, eye_vec, surf_norm, closest_sphere);
 
         if (reflection_on && cur_step <= step_max) {
-            Vector reflected_ray = vec_minus(vec_scale(surf_norm, vec_dot(surf_norm, light_ray) * 2), light_ray);
-            normalize(&reflected_ray);
+            normalize(&ray);
+            Vector reflected_ray = vec_plus(vec_scale(surf_norm, -2 * vec_dot(surf_norm, ray)), ray);
 
             RGB_float reflected_color = recursive_ray_trace(reflected_ray, hit, cur_step + 1);
 
@@ -173,6 +171,8 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
             color = clr_add(color, clr_scale(reflected_color, closest_sphere->reflectance));
         }
     }
+
+    validate_color(&color);
 
     return color;
 }
