@@ -23,7 +23,7 @@ SOURCE= scene.cpp image_util.cpp sphere.cpp vector.cpp trace.cpp raycast.cpp inc
 CC= g++
 
 # The name of the final executable
-EXECUTABLE= raycast
+EXECUTABLE= raychess
 
 # The basic library we are using add the other libraries you want to link
 # to your program here
@@ -46,6 +46,8 @@ OBJECT= $(SOURCE:.cpp=.o)
 # Don't touch any of these either if you don't know what you're doing
 all: $(OBJECT) depend
 	$(CC) $(CFLAGS) $(INCLUDEFLAG) $(LIBFLAG)  $(OBJECT) -o $(EXECUTABLE) $(LDFLAGS)
+
+raychess: all
 
 depend:
 	$(CC) -M $(SOURCE) > depend
