@@ -79,7 +79,7 @@ int step_max = 1;
 // You can put your flags here
 bool shadow_on = false;
 bool reflection_on = false;
-bool cheeseboard_on = false;
+bool chessboard_on = false;
 bool stochastic_on = false;
 bool supersampling_on = false;
 
@@ -235,7 +235,7 @@ int main(int argc, char** argv)
             reflection_on = true;
         }
         else if (strcmp(argv[i], "+c") == 0) {
-            cheeseboard_on = true;
+            chessboard_on = true;
         }
         else if (strcmp(argv[i], "+f") == 0) {
             stochastic_on = true;

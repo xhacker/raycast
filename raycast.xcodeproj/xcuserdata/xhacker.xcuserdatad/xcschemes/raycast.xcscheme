@@ -63,7 +63,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-d 5"
+            argument = "-d 3"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -80,11 +80,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+c chessboard"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+f diffuse"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+p supersampling"

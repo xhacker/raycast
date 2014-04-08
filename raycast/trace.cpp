@@ -44,10 +44,14 @@ extern float decay_c;
 
 extern bool shadow_on;
 extern bool reflection_on;
-extern bool cheeseboard_on;
+extern bool chessboard_on;
 extern bool stochastic_on;
 extern bool supersampling_on;
 extern int step_max;
+
+// chess board
+Vector board_norm = {0, -3, 1};
+Point board_p = {0, -3, -4};
 
 /////////////////////////////////////////////////////////////////////
 
@@ -63,14 +67,14 @@ void validate_color(RGB_float *c)
         c->b = 0;
     }
 
-    if (c->r > 255) {
-        c->r = 255;
+    if (c->r > 1.0) {
+        c->r = 1.0;
     }
-    if (c->g > 255) {
-        c->g = 255;
+    if (c->g > 1.0) {
+        c->g = 1.0;
     }
-    if (c->b > 255) {
-        c->b = 255;
+    if (c->b > 1.0) {
+        c->b = 1.0;
     }
 }
 
@@ -123,6 +127,53 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
     return color;
 }
 
+bool intersect_chessboard(Point p, Vector ray, Point *hit)
+{
+    normalize(&board_norm);
+
+    Vector vec;
+    vec.x = p.x - board_p.x;
+    vec.y = p.y - board_p.y;
+    vec.z = p.z - board_p.z;
+
+    if (vec_dot(board_norm, ray) == 0 && vec_dot(board_norm, vec)) {
+        return false;
+    }
+
+    double t = vec_dot(board_norm, vec) / vec_dot(board_norm, ray) * -1;
+
+    if (t > 0) {
+        hit->x = p.x + t * ray.x;
+        hit->y = p.y + t * ray.y;
+        hit->z = p.z + t * ray.z;
+        return true;
+    }
+
+    return false;
+}
+
+RGB_float board_color(Point p)
+{
+    RGB_float color;
+
+    int i = int(p.x + 100) - 100;
+    int j = int(p.z + 100) - 100;
+
+    if (i >= 4 || i < -4 || j >= 2 || j < -6) {
+        return background_clr;
+    }
+
+    if ((i % 2 == 0 && j % 2 == 0) ||
+        (i % 2 != 0 && j % 2 != 0)) {
+        color = {0, 0, 0};
+    }
+    else {
+        color = {1, 1, 1};
+    }
+
+    return color;
+}
+
 /************************************************************************
  * This is the recursive ray tracer - you need to implement this!
  * You should decide what arguments to use.
@@ -133,6 +184,19 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
 
     Point hit;
     Spheres *closest_sphere = intersect_scene(p, ray, scene, &hit);
+
+    Point board_hit;
+    if (chessboard_on && intersect_chessboard(p, ray, &board_hit))
+    {
+        Vector eye_vec = get_vec(board_hit, eye_pos);
+        normalize(&eye_vec);
+        color = board_color(board_hit);
+        Vector shadow_vec = get_vec(board_hit, light1);
+        Spheres *sph = NULL;
+        if (shadow_on && intersect_shadow(board_hit, shadow_vec, sph)) {
+            color = clr_scale(color, 0.5);
+        }
+    }
 
     if (closest_sphere) {
         Vector eye_vec = get_vec(hit, eye_pos);
