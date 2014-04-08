@@ -83,14 +83,28 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
 
     // specular
     float N = sph->mat_shineness;
-    Vector reflect_vec = vec_plus(light_v, vec_scale(surf_norm, 2 * vec_dot(surf_norm, vec_scale(light_v, -1))));
+    float cos_theta = vec_dot(surf_norm, light_v);
+    if (cos_theta < 0) {
+        cos_theta = 0.0;
+    }
+    Vector reflect_vec = vec_plus(light_v, vec_scale(surf_norm, -2 * cos_theta));
     normalize(&reflect_vec);
-    color.r += coeff * (light1_specular[0] * sph->mat_specular[0] * (pow(vec_dot(reflect_vec, v), N)));
-    color.g += coeff * (light1_specular[1] * sph->mat_specular[1] * (pow(vec_dot(reflect_vec, v), N)));
-    color.b += coeff * (light1_specular[2] * sph->mat_specular[2] * (pow(vec_dot(reflect_vec, v), N)));
+    color.r += coeff * (light1_specular[0] * sph->mat_specular[0] * pow(vec_dot(reflect_vec, v), N));
+    color.g += coeff * (light1_specular[1] * sph->mat_specular[1] * pow(vec_dot(reflect_vec, v), N));
+    color.b += coeff * (light1_specular[2] * sph->mat_specular[2] * pow(vec_dot(reflect_vec, v), N));
 
     if (shadow_on && intersect_shadow(p, light_v, scene)) {
         color = ambient;
+    }
+
+    if (color.r > 255) {
+        color.r = 255;
+    }
+    if (color.g > 255) {
+        color.g = 255;
+    }
+    if (color.b > 255) {
+        color.b = 255;
     }
 
     return color;
