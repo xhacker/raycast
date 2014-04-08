@@ -45,6 +45,7 @@ extern float decay_c;
 extern bool shadow_on;
 extern bool reflection_on;
 extern bool chessboard_on;
+extern bool refraction_on;
 extern bool stochastic_on;
 extern bool supersampling_on;
 extern int step_max;
@@ -254,6 +255,10 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
             }
 
             color = clr_add(color, clr_scale(reflected_color, closest_sphere->reflectance));
+        }
+
+        if (refraction_on && cur_step < step_max && closest_sphere->transparent)
+        {
         }
     }
 

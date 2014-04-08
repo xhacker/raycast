@@ -80,6 +80,7 @@ int step_max = 1;
 bool shadow_on = false;
 bool reflection_on = false;
 bool chessboard_on = false;
+bool refraction_on = false;
 bool stochastic_on = false;
 bool supersampling_on = false;
 
@@ -236,6 +237,9 @@ int main(int argc, char** argv)
         }
         else if (strcmp(argv[i], "+c") == 0) {
             chessboard_on = true;
+        }
+        else if (strcmp(argv[i], "+r") == 0) {
+            refraction_on = true;
         }
         else if (strcmp(argv[i], "+f") == 0) {
             stochastic_on = true;

@@ -17,6 +17,9 @@ typedef struct sphere {
     float reflectance; // this number [0,1] determines how much
     // reflected light contributes to the color
     // of a pixel
+
+    bool transparent;
+
     struct sphere* next;
 } Spheres; // a list of spheres
 
@@ -26,4 +29,4 @@ bool intersect_shadow(Point o, Vector ray, Spheres *spheres);
 // return the unit normal at a point on sphere
 Vector sphere_normal(Point, Spheres*);
 // add a sphere to the sphere list
-Spheres * add_sphere(Spheres*, Point, float, float[], float[], float[], float, float, int);
+Spheres * add_sphere(Spheres*, Point, float, float[], float[], float[], float, float, bool, int);

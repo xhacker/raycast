@@ -64,6 +64,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-d 3"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-u 3"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -76,7 +80,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+r refraction"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+c chessboard"
@@ -84,7 +88,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+f diffuse"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "+p supersampling"

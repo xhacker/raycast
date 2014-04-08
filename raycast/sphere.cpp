@@ -95,7 +95,7 @@ Spheres * intersect_scene(Point o, Vector ray, Spheres *spheres, Point *hit)
  *****************************************************/
 Spheres * add_sphere(Spheres *slist, Point ctr, float rad, float amb[],
                     float dif[], float spe[], float shine,
-                    float refl, int sindex)
+                    float refl, bool transparent, int sindex)
 {
     Spheres* new_sphere;
 
@@ -114,6 +114,7 @@ Spheres * add_sphere(Spheres *slist, Point ctr, float rad, float amb[],
     (new_sphere->mat_specular)[2] = spe[2];
     new_sphere->mat_shineness = shine;
     new_sphere->reflectance = refl;
+    new_sphere->transparent = transparent;
     new_sphere->next = NULL;
 
     if (slist == NULL) { // first object
