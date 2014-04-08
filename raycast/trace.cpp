@@ -80,16 +80,16 @@ void validate_color(RGB_float *c)
 RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
 {
     Vector light_v = get_vec(p, light1);
-    float d = vec_len(get_vec(p, light1));
+    double d = vec_len(get_vec(p, light1));
     normalize(&light_v);
 
     RGB_float color    = {0, 0, 0};
     RGB_float ambient  = {0, 0, 0};
 
-    float coeff = 1 / (decay_a + decay_b * d + decay_c * d * d);
+    double coeff = 1 / (decay_a + decay_b * d + decay_c * d * d);
 
     // diffuse
-    float dot = vec_dot(surf_norm, light_v);
+    double dot = vec_dot(surf_norm, light_v);
     color.r += coeff * light1_diffuse[0] * sph->mat_diffuse[0] * dot;
     color.g += coeff * light1_diffuse[1] * sph->mat_diffuse[1] * dot;
     color.b += coeff * light1_diffuse[2] * sph->mat_diffuse[2] * dot;
@@ -105,8 +105,8 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
     ambient.b += light1_ambient[2] * sph->mat_ambient[2];
 
     // specular
-    float N = sph->mat_shineness;
-    float cos_theta = vec_dot(surf_norm, light_v);
+    double N = sph->mat_shineness;
+    double cos_theta = vec_dot(surf_norm, light_v);
     if (cos_theta < 0) {
         cos_theta = 0.0;
     }
@@ -152,9 +152,9 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
 
             if (stochastic_on) {
                 for (int i = 0; i < NUM_RANDOM_RAYS; ++i) {
-                    float random_x = (float)rand() / RAND_MAX / 2;
-                    float random_y = (float)rand() / RAND_MAX / 2;
-                    float random_z = (float)rand() / RAND_MAX / 2;
+                    double random_x = (double)rand() / RAND_MAX / 2;
+                    double random_y = (double)rand() / RAND_MAX / 2;
+                    double random_z = (double)rand() / RAND_MAX / 2;
 
                     Vector random_ray = reflected_ray;
                     random_ray.x += random_x;
@@ -188,10 +188,10 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
 void ray_trace()
 {
     int i, j;
-    float x_grid_size = image_width / float(win_width);
-    float y_grid_size = image_height / float(win_height);
-    float x_start = -0.5 * image_width;
-    float y_start = -0.5 * image_height;
+    double x_grid_size = image_width / double(win_width);
+    double y_grid_size = image_height / double(win_height);
+    double x_start = -0.5 * image_width;
+    double y_start = -0.5 * image_height;
     RGB_float ret_color;
     Point cur_pixel_pos;
     Vector ray;

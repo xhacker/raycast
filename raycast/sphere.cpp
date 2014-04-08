@@ -6,7 +6,7 @@
 /**********************************************************************
  * This function intersects a ray with a given sphere 'sph'. You should
  * use the parametric representation of a line and do the intersection.
- * The function should return the parameter value for the intersection, 
+ * The function should return the parameter value for the intersection,
  * which will be compared with others to determine which intersection
  * is closest. The value -1.0 is returned if there is no intersection
  *
@@ -45,15 +45,15 @@ bool intersect_shadow(Point o, Vector ray, Spheres *spheres)
     normalize(&ray);
 
     while (spheres) {
-        float a = vec_dot(ray, ray);
-        float b = vec_dot(vec_scale(get_vec(spheres->center, o), 2), ray);
-        float c = vec_dot(get_vec(spheres->center, o), get_vec(spheres->center, o));
+        double a = vec_dot(ray, ray);
+        double b = vec_dot(vec_scale(get_vec(spheres->center, o), 2), ray);
+        double c = vec_dot(get_vec(spheres->center, o), get_vec(spheres->center, o));
         c -= spheres->radius * spheres->radius;
 
-        float discriminant = b * b - 4 * a * c;
+        double discriminant = b * b - 4 * a * c;
 
-        float t1 = (-b + sqrtf(discriminant)) / 2 * a;
-        float t2 = (-b - sqrtf(discriminant)) / 2 * a;
+        double t1 = (-b + sqrtf(discriminant)) / 2 * a;
+        double t2 = (-b - sqrtf(discriminant)) / 2 * a;
 
         if (discriminant > 0 && t1 > 0 && t2 > 0) {
             return true;
@@ -74,10 +74,10 @@ Spheres * intersect_scene(Point o, Vector ray, Spheres *spheres, Point *hit)
 {
     Spheres *closest = NULL;
 
-    float min_distance = FLT_MAX;
+    double min_distance = DBL_MAX;
 
     while (spheres) {
-        float distance = intersect_sphere(o, ray, spheres, hit);
+        double distance = intersect_sphere(o, ray, spheres, hit);
         if ((distance != -1.0) && (distance < min_distance)) {
             min_distance = min_distance;
             closest = spheres;
