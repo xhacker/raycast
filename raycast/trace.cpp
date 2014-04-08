@@ -51,6 +51,29 @@ extern int step_max;
 
 /////////////////////////////////////////////////////////////////////
 
+void validate_color(RGB_float *c)
+{
+    if (c->r < 0) {
+        c->r = 0;
+    }
+    if (c->g < 0) {
+        c->g = 0;
+    }
+    if (c->b < 0) {
+        c->b = 0;
+    }
+
+    if (c->r > 255) {
+        c->r = 255;
+    }
+    if (c->g > 255) {
+        c->g = 255;
+    }
+    if (c->b > 255) {
+        c->b = 255;
+    }
+}
+
 /*********************************************************************
  * Phong illumination - you need to implement this!
  *********************************************************************/
@@ -72,9 +95,9 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
     color.b += coeff * light1_diffuse[2] * sph->mat_diffuse[2] * dot;
 
     // global ambient
-    ambient.r += global_ambient[0] * sph->reflectance;
-    ambient.g += global_ambient[1] * sph->reflectance;
-    ambient.b += global_ambient[2] * sph->reflectance;
+//    ambient.r += global_ambient[0] * sph->reflectance;
+//    ambient.g += global_ambient[1] * sph->reflectance;
+//    ambient.b += global_ambient[2] * sph->reflectance;
 
     // light ambient
     ambient.r += light1_ambient[0] * sph->mat_ambient[0];
@@ -97,15 +120,7 @@ RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
         color = ambient;
     }
 
-    if (color.r > 255) {
-        color.r = 255;
-    }
-    if (color.g > 255) {
-        color.g = 255;
-    }
-    if (color.b > 255) {
-        color.b = 255;
-    }
+    validate_color(&color);
 
     return color;
 }
