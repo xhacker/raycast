@@ -51,7 +51,7 @@ extern int step_max;
 
 // chess board
 Vector board_norm = {0, -3, 1};
-Point board_p = {0, -3, -4};
+Point board_p = {0, -3, -6};
 
 /////////////////////////////////////////////////////////////////////
 
@@ -152,6 +152,18 @@ bool intersect_chessboard(Point p, Vector ray, Point *hit)
     return false;
 }
 
+bool in_board(Point p)
+{
+    int i = int(p.x + 100) - 100;
+    int j = int(p.z + 100) - 100;
+
+    if (i >= 4 || i < -4 || j >= 2 || j < -6) {
+        return false;
+    }
+
+    return true;
+}
+
 RGB_float board_color(Point p)
 {
     RGB_float color;
@@ -191,9 +203,8 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
         Vector eye_vec = get_vec(board_hit, eye_pos);
         normalize(&eye_vec);
         color = board_color(board_hit);
-        Vector shadow_vec = get_vec(board_hit, light1);
-        Spheres *sph = NULL;
-        if (shadow_on && intersect_shadow(board_hit, shadow_vec, sph)) {
+        Vector shadow_v = get_vec(board_hit, light1);
+        if (shadow_on && in_board(board_hit) && intersect_shadow(board_hit, shadow_v, scene)) {
             color = clr_scale(color, 0.5);
         }
     }
