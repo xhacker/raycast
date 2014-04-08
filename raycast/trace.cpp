@@ -50,8 +50,8 @@ extern bool supersampling_on;
 extern int step_max;
 
 // chess board
-Vector board_norm = {0, -3, 1};
-Point board_p = {0, -3, -6};
+Vector board_norm = {0, -1, 0};
+Point board_p = {0, -2, -10};
 
 /////////////////////////////////////////////////////////////////////
 
@@ -206,6 +206,16 @@ RGB_float recursive_ray_trace(Vector ray, Point p, int cur_step)
         Vector shadow_v = get_vec(board_hit, light1);
         if (shadow_on && in_board(board_hit) && intersect_shadow(board_hit, shadow_v, scene)) {
             color = clr_scale(color, 0.5);
+        }
+
+        if (reflection_on && in_board(board_hit) && cur_step <= step_max) {
+            normalize(&ray);
+            Vector reflected_ray = vec_plus(vec_scale(board_norm, -2 * vec_dot(board_norm, ray)), ray);
+
+            RGB_float reflected_color = recursive_ray_trace(reflected_ray, board_hit, cur_step + 1);
+
+            color = clr_add(color, clr_scale(reflected_color, 0.3));
+            color = clr_scale(color, 1.0 / 1.3);
         }
     }
 
