@@ -53,7 +53,7 @@ RGB_float null_clr = {0.0, 0.0, 0.0}; // NULL color
 // these view parameters should be fixed
 //
 Point eye_pos = {0.0, 0.0, 0.0}; // eye position
-float image_plane = -2; // image plane position
+float image_plane = -1.5; // image plane position
 
 // list of spheres in the scene
 Spheres *scene = NULL;
@@ -79,6 +79,7 @@ int step_max = 1;
 // You can put your flags here
 bool shadow_on = false;
 bool reflection_on = false;
+bool cheeseboard_on = false;
 bool stochastic_on = false;
 bool supersampling_on = false;
 
@@ -232,6 +233,9 @@ int main(int argc, char** argv)
         }
         else if (strcmp(argv[i], "+l") == 0) {
             reflection_on = true;
+        }
+        else if (strcmp(argv[i], "+c") == 0) {
+            cheeseboard_on = true;
         }
         else if (strcmp(argv[i], "+f") == 0) {
             stochastic_on = true;

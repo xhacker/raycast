@@ -44,6 +44,7 @@ extern float decay_c;
 
 extern bool shadow_on;
 extern bool reflection_on;
+extern bool cheeseboard_on;
 extern bool stochastic_on;
 extern bool supersampling_on;
 extern int step_max;
@@ -55,26 +56,40 @@ extern int step_max;
  *********************************************************************/
 RGB_float phong(Point p, Vector v, Vector surf_norm, Spheres* sph)
 {
-    Vector light_vec = get_vec(p, light1);
+    Vector light_v = get_vec(p, light1);
     float d = vec_len(get_vec(p, light1));
-    normalize(&light_vec);
+    normalize(&light_v);
 
-    RGB_float color   = {0, 0, 0};
-    RGB_float ambient = {0, 0, 0};
+    RGB_float color    = {0, 0, 0};
+    RGB_float ambient  = {0, 0, 0};
 
     float coeff = 1 / (decay_a + decay_b * d + decay_c * d * d);
 
     // diffuse
-    color.r += coeff * light1_diffuse[0] * sph->mat_diffuse[0] * vec_dot(surf_norm, light_vec);
-    color.g += coeff * light1_diffuse[1] * sph->mat_diffuse[1] * vec_dot(surf_norm, light_vec);
-    color.b += coeff * light1_diffuse[2] * sph->mat_diffuse[2] * vec_dot(surf_norm, light_vec);
+    float dot = vec_dot(surf_norm, light_v);
+    color.r += coeff * light1_diffuse[0] * sph->mat_diffuse[0] * dot;
+    color.g += coeff * light1_diffuse[1] * sph->mat_diffuse[1] * dot;
+    color.b += coeff * light1_diffuse[2] * sph->mat_diffuse[2] * dot;
 
-    // global illumination
+    // global ambient
     ambient.r += global_ambient[0] * sph->reflectance;
     ambient.g += global_ambient[1] * sph->reflectance;
     ambient.b += global_ambient[2] * sph->reflectance;
 
-    if (shadow_on && intersect_shadow(p, light_vec, scene)) {
+    // light ambient
+    ambient.r += light1_ambient[0] * sph->mat_ambient[0];
+    ambient.g += light1_ambient[1] * sph->mat_ambient[1];
+    ambient.b += light1_ambient[2] * sph->mat_ambient[2];
+
+    // specular
+    float N = sph->mat_shineness;
+    Vector reflect_vec = vec_plus(light_v, vec_scale(surf_norm, 2 * vec_dot(surf_norm, vec_scale(light_v, -1))));
+    normalize(&reflect_vec);
+    color.r += coeff * (light1_specular[0] * sph->mat_specular[0] * (pow(vec_dot(reflect_vec, v), N)));
+    color.g += coeff * (light1_specular[1] * sph->mat_specular[1] * (pow(vec_dot(reflect_vec, v), N)));
+    color.b += coeff * (light1_specular[2] * sph->mat_specular[2] * (pow(vec_dot(reflect_vec, v), N)));
+
+    if (shadow_on && intersect_shadow(p, light_v, scene)) {
         color = ambient;
     }
 
@@ -177,12 +192,6 @@ void ray_trace()
                 }
                 ret_color = clr_scale(ret_color, 1.0 / 5);
             }
-
-            // Parallel rays can be cast instead using below
-            //
-            // ray.x = ray.y = 0;
-            // ray.z = -1.0;
-            // ret_color = recursive_ray_trace(cur_pixel_pos, ray, 1);
 
             frame[i][j][0] = GLfloat(ret_color.r);
             frame[i][j][1] = GLfloat(ret_color.g);
